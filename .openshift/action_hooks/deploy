@@ -1,0 +1,5 @@
+#!/bin/bash
+set -x
+export NLTK_DATA=$OPENSHIFT_DATA_DIR
+echo "YOU ARE IN PRE_START HOOK"
+echo $NLTK_DATA
