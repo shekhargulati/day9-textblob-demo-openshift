@@ -1,0 +1,92 @@
+<html>
+<head>
+	<title>Do sentiment analysis on the text</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
+	<style type="text/css">
+    body {
+      padding-top:60px;
+      padding-bottom: 60px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Run Sentiment Analysis</a>
+        </div>
+        
+    </div>
+  </div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<textarea class="form-control" rows="3" placeholder="Write your text. Minimum length 10 characters"></textarea>	
+		</div>
+		<div class="col-md-6">
+			<p id="result"></p>
+		</div>
+	</div>
+	
+</div>
+
+
+<script type="text/javascript" src="static/js/jquery.js"></script>
+<script type="text/javascript">
+	$("textarea").keyup(function(e){
+		console.log('keycode '+e.keyCode);
+		switch (e.keyCode) {
+            case 8:  // Backspace
+                console.log('backspace'+e);
+            case 9:  // Tab
+            	console.log('Tab');
+            case 13: // Enter
+            	console.log('Enter');
+            case 37: // Left
+            	console.log('Left');
+            case 38: // Up
+            	console.log('Up');
+            case 39: // Right
+            	console.log('Right');
+            case 40: // Down
+            	console.log('Down');
+            break;
+
+            default:
+            var input = $('textarea').val();
+            $('#result').removeClass("alert alert-warning");
+            $('#result').removeClass("alert alert-danger");
+            $('#result').removeClass("alert alert-success");
+            if (input.length > 10){
+			
+			$.get('/api/v1/sentiment/'+input,function(result){
+				console.log(result.polarity);
+				if(result.polarity < 0.0){
+					console.log('less than 0');
+					$('#result').addClass("alert alert-danger")	.text(input);
+				} else if( result.polarity >= 0.0 && result.polarity <= 0.5){
+					console.log('between 0 and 0.5');
+					$('#result').addClass("alert alert-warning").text(input);
+				}else{
+					console.log('Greater than 0.5');
+					$('#result').addClass("alert alert-success").text(input);
+				}
+				
+			})
+		}
+	}
+    
+
+	});
+
+</script>
+</body>
+</html>
