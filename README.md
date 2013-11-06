@@ -1,3 +1,7 @@
-The OpenShift `python` cartridge documentation can be found at:
+## Day 9 Demo Application##
 
-https://github.com/openshift/origin-server/tree/master/cartridges/openshift-origin-cartridge-python/README.md
+Today, I spend time on TextBlob. To deploy the application on OpenShift
+
+```
+$ rhc create-app day9demo python-2.7 --from-code https://github.com/shekhargulati/day9-textblob-demo-openshift.git
+```
